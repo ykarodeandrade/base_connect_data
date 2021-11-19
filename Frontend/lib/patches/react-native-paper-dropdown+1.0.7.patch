@@ -1,0 +1,29 @@
+diff --git a/node_modules/react-native-paper-dropdown/dist/DropDown.js b/node_modules/react-native-paper-dropdown/dist/DropDown.js
+index 19bca20..6b1aeec 100644
+--- a/node_modules/react-native-paper-dropdown/dist/DropDown.js
++++ b/node_modules/react-native-paper-dropdown/dist/DropDown.js
+@@ -52,9 +52,9 @@ const DropDown = forwardRef((props, ref) => {
+             setValue(currentValue);
+         }
+     }, [value]);
+-    return (<Menu visible={visible} onDismiss={onDismiss} theme={theme} anchor={<TouchableRipple ref={ref} onPress={showDropDown} onLayout={onLayout} accessibilityLabel={accessibilityLabel}>
+-            <View pointerEvents={"none"}>
+-              <TextInput value={displayValue} mode={mode} label={label} placeholder={placeholder} pointerEvents={"none"} theme={theme} right={<TextInput.Icon name={visible ? "menu-up" : "menu-down"}/>} {...inputProps}/>
++    return (<Menu visible={visible} onDismiss={onDismiss} theme={theme} anchor={<TouchableRipple ref={ref} onPress={showDropDown} onLayout={onLayout} accessibilityLabel={accessibilityLabel} {...props.touchableProps}>
++            <View pointerEvents={"none"} {...props.viewProps}>
++              <TextInput value={displayValue} mode={mode} label={label} placeholder={placeholder} pointerEvents={"none"} theme={theme} right={<TextInput.Icon name={visible ? "menu-up" : "menu-down"} {...props.iconProps}/>} {...inputProps}/>
+             </View>
+           </TouchableRipple>} style={{
+             maxWidth: inputLayout?.width,
+@@ -95,6 +95,11 @@ const DropDown = forwardRef((props, ref) => {
+                 ...(isActive(_item.value)
+                     ? dropDownItemSelectedStyle
+                     : dropDownItemStyle),
++            }} onPress={() => {
++                setActive(_item.value);
++                if (onDismiss) {
++                    onDismiss();
++                }
+             }}/>
+                   {multiSelect && (<Checkbox.Android theme={{
+                     colors: { accent: activeTheme?.colors.primary },
